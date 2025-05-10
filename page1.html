@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SellZen - Coming Soon</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", sans-serif;
+        background-color: #000;
+        color: white;
+        line-height: 1.6;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        scroll-behavior: smooth;
+      }
+
+      header.hero {
+        background: linear-gradient(135deg, #6a0dad, #0000ff);
+        padding: 2rem;
+      }
+
+      .navbar {
+        width: 100%;
+        max-width: 1200px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+
+      .logo,
+      .word1 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #00ff00;
+      }
+
+      .intro-wrapper {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        align-items: center;
+      }
+
+      .intro {
+        flex: 1;
+        min-width: 280px;
+        height: 80vh;
+      }
+
+      .intro h1 {
+        font-size: 2.5rem;
+      }
+
+      .intro p {
+        margin: 0.5rem 0;
+      }
+
+      #countdown {
+        font-size: 1.5rem;
+        margin: 0.5rem 0;
+        color: #00ff00;
+      }
+
+      .intro-image {
+        flex: 1;
+        min-width: 280px;
+        display: flex;
+        bottom: 4rem;
+        justify-content: center;
+      }
+
+      /* Updated styles for circular image with animation */
+      .intro-image img {
+        width: 450px;
+        height: 450px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 5px solid #00ff00;
+        animation: pulse 2s infinite alternate, glow 4s infinite alternate;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Create pseudo-element for more dynamic glow effect */
+      .intro-image {
+        position: relative;
+      }
+
+      .intro-image::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 450px;
+        height: 450px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        background: transparent;
+        z-index: 0;
+        animation: ripple 3s infinite;
+        box-shadow: 0 0 40px 5px rgba(0, 255, 0, 0.7);
+      }
+
+      /* Animations for the image */
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+
+        100% {
+          transform: scale(1.05);
+        }
+      }
+
+      @keyframes glow {
+        0% {
+          border-color: #00ff00;
+          box-shadow: 0 0 20px 5px rgba(0, 255, 0, 0.7);
+        }
+
+        50% {
+          border-color: #9900ff;
+          box-shadow: 0 0 25px 5px rgba(153, 0, 255, 0.7);
+        }
+
+        100% {
+          border-color: #00ffff;
+          box-shadow: 0 0 30px 5px rgba(0, 255, 255, 0.7);
+        }
+      }
+
+      @keyframes ripple {
+        0% {
+          box-shadow: 0 0 0 0 rgba(0, 255, 0, 0.4);
+          width: 430px;
+          height: 430px;
+        }
+
+        70% {
+          box-shadow: 0 0 0 25px rgba(0, 255, 0, 0);
+          width: 480px;
+          height: 480px;
+        }
+
+        100% {
+          box-shadow: 0 0 0 0 rgba(0, 255, 0, 0);
+          width: 430px;
+          height: 430px;
+        }
+      }
+
+      .cta-button {
+        background-color: #00ff00;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        font-size: 1rem;
+        cursor: pointer;
+        border-radius: 0.5rem;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        margin-top: 1rem;
+      }
+
+      .cta-button:hover {
+        background-color: #33ff33;
+        transform: scale(1.1);
+      }
+
+      .section-split {
+        padding: 4rem 2rem;
+        background-color: #111;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 3rem;
+      }
+
+      .section-text {
+        position: relative;
+        left: 5rem;
+        flex: 1;
+        /* min-width: 300px; */
+      }
+
+      .section-form {
+        flex: 1;
+        border: 2px solid purple;
+        background-color: #1a1a1a;
+        padding: 2rem;
+        border-radius: 1rem;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      ul {
+        padding: 0;
+        list-style: none;
+        color: #99ccff;
+      }
+
+      .footer {
+        background-color: rgb(48, 48, 48);
+        text-align: center;
+        color: #ccc;
+        margin-top: auto;
+        height: 60px;
+        /* display: flex; */
+        justify-content: center;
+        align-items: center;
+
+        /* padding: 1.5rem 0; */
+      }
+
+      /* What We Offer Section Styles */
+      .what-we-offer {
+        background-color: #080808;
+        padding: 10rem 2rem;
+        text-align: center;
+      }
+
+      .section-title {
+        color: #00ff00;
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+        position: relative;
+        display: inline-block;
+      }
+
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 30%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(90deg, #6a0dad, #00ff00);
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .feature-box {
+        background: linear-gradient(145deg, #121212, #1e1e1e);
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+        transition: all 0.4s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        border-bottom: 3px solid transparent;
+      }
+
+      .feature-box:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4),
+          0 0 30px rgba(0, 255, 0, 0.2);
+        border-bottom: 3px solid #00ff00;
+      }
+
+      .feature-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        background: linear-gradient(135deg, #6a0dad, #00ff00);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transition: all 0.4s ease;
+      }
+
+      .feature-box:hover .feature-icon {
+        transform: scale(1.2);
+      }
+
+      .feature-box h3 {
+        color: #ffffff;
+        margin: 0.5rem 0;
+        font-size: 1.5rem;
+        transition: color 0.3s ease;
+      }
+
+      .feature-box:hover h3 {
+        color: #00ff00;
+      }
+
+      .feature-box p {
+        color: #b0b0b0;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        flex-grow: 1;
+      }
+
+      .waitlist-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.3rem;
+        align-items: center;
+      }
+
+      .waitlist-form input {
+        padding: 0.75rem;
+        border: none;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        width: 100%;
+        max-width: 400px;
+      }
+
+      .waitlist-form button {
+        background-color: #00ff00;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        font-size: 1rem;
+        cursor: pointer;
+        border-radius: 0.5rem;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+
+      .waitlist-form button:hover {
+        background-color: #33ff33;
+        transform: scale(1.1);
+      }
+
+      .form-word {
+        text-align: center;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      @media (max-width: 768px) {
+       
+
+        .section-text {
+          position: relative;
+          left: 0;
+        }
+
+        .intro-wrapper,
+        .section-split {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        /* Adjust image size for mobile */
+        .intro-image img {
+          width: 320px;
+          height: 320px;
+        }
+        .intro-image {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          margin-top: 4.5rem;
+        }
+      
+
+        .intro-image::after {
+          width: 320px;
+          height: 320px;
+        }
+
+        @keyframes ripple {
+          0% {
+            width: 300px;
+            height: 300px;
+          }
+
+          70% {
+            width: 340px;
+            height: 340px;
+          }
+
+          100% {
+            width: 300px;
+            height: 300px;
+          }
+        }
+
+        /* Updated Mobile adjustments for What We Offer section */
+        .what-we-offer {
+          padding: 5rem 1rem; /* Reduced padding for mobile */
+          overflow: hidden; /* Ensure no horizontal scrolling */
+        }
+
+        .feature-grid {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0; /* Reset gap as we're using margins instead */
+          max-width: 100%; /* Use full width of container */
+          margin: 0 auto;
+        }
+
+        .feature-box {
+          width: 85%; /* Make boxes narrower than screen */
+          padding: 2rem;
+          margin-bottom: 4rem; /* Significant space between boxes */
+          min-height: 200px;
+          border: 2px solid rgba(0, 255, 0, 0.1); /* Subtle border */
+          position: relative; /* For shadow positioning */
+          align-self: center; /* Center all boxes */
+        }
+
+        .feature-box:last-child {
+          margin-bottom: 1rem; /* Less space after last item */
+        }
+
+        .feature-icon {
+          font-size: 3.5rem;
+          margin-bottom: 1.5rem;
+        }
+
+        .section-form {
+          border: none;
+          background-color: transparent;
+          position: relative;
+          padding: 0;
+          margin: 0 auto;
+          max-width: 100%;
+          width: 95%;
+          /* margin: 0 auto; */
+        }
+
+        .waitlist-form input,
+        .waitlist-form button {
+          width: 95%;
+          max-width: none;
+        }
+
+        /* Full-height hero section adjustment */
+        header.hero {
+          min-height: 100vh;
+          padding-top: 5rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+
+        /* Sticky navbar adjustments */
+        /* .navbar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          z-index: 1000;
+          background-color: rgba(0, 0, 0, 0.9);
+          margin: 0;
+          padding: 1rem;
+          backdrop-filter: blur(10px);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        } */
+
+        .section-title {
+          font-size: 2rem;
+          margin-bottom: 2.5rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="hero">
+      <nav class="navbar">
+        <div class="logo">SellZan</div>
+      </nav>
+      <div class="intro-wrapper">
+        <section class="intro">
+          <h1>Welcome to SellZan – The Social Commerce Revolution</h1>
+          <p>This isn't just another marketplace; it's built on trust.</p>
+          <p>
+            At SellZan, our goal is simple: to solve the problem of untrusted
+            and unstructured peer-to-peer marketing, allowing you to buy, sell,
+            and connect safely.
+          </p>
+          <p>
+            This is a platform for secure transactions and meaningful
+            interactions.
+          </p>
+          <p>The next and biggest thing is here.</p>
+          <p>
+            <em
+              >Join the waitlist — Be part of over 10,000 people who already
+              love it.</em
+            >
+          </p>
+          <p><strong>Launching in:</strong></p>
+          <div id="countdown"></div>
+
+          <button
+            class="cta-button"
+            onclick="document.getElementById('waitlist-form').scrollIntoView({ behavior: 'smooth' });"
+          >
+            Join the Waitlist Now
+          </button>
+        </section>
+
+        <div class="intro-image">
+          <img
+            src="/img/adeniji-abdullahi-a-Bwie8Eo6Oes-unsplash.jpg"
+            alt="SellZan App Preview"
+          />
+        </div>
+      </div>
+    </header>
+
+    <!-- What We Offer Section -->
+    <section class="what-we-offer">
+      <h2 class="section-title">What We Offer</h2>
+      <div class="feature-grid">
+        <div class="feature-box">
+          <div class="feature-icon">🚀</div>
+          <h3>Live Marketing</h3>
+          <p>
+            Connect with your audience in real-time through live streams and
+            instant promotions that drive engagement and sales.
+          </p>
+        </div>
+
+        <div class="feature-box">
+          <div class="feature-icon">📊</div>
+          <h3>Smart Analytics</h3>
+          <p>
+            Make data-driven decisions with AI-powered insights that analyze
+            customer behavior and optimize your selling strategy.
+          </p>
+        </div>
+
+        <div class="feature-box">
+          <div class="feature-icon">🔄</div>
+          <h3>Social Commerce</h3>
+          <p>
+            Turn followers into customers with seamless social media integration
+            that makes every post shoppable.
+          </p>
+        </div>
+
+        <div class="feature-box">
+          <div class="feature-icon">🛠️</div>
+          <h3>Automated Tools</h3>
+          <p>
+            Save time with smart tools that handle inventory management, price
+            optimization, and customer communications.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-split">
+      <div class="section-text">
+        <h2 class="word1">SellZan</h2>
+        <p>
+          Discover smarter ways to buy and sell online with powerful tools in
+          your pocket.
+        </p>
+        <p>
+          <strong><i>SellZan: Get Busy, Get Social.</i></strong>
+        </p>
+      </div>
+      <div class="section-form">
+        <h3 class="form-word">Join the Waitlist</h3>
+        <form class="waitlist-form" id="waitlist-form">
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Name"
+            required
+          />
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="Phone Number"
+            required
+          />
+          <button type="submit">Join the Waitlist</button>
+        </form>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>&copy; 2025 SellZen. All rights reserved.</p>
+    </footer>
+
+    <script type="module">
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("waitlist-form");
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const name = form.name.value;
+          const phone = form.phone.value;
+          alert(`Thanks, ${name}! We'll contact you at ${phone}.`);
+          form.reset();
+        });
+
+        // Countdown Timer
+        const countdownEl = document.getElementById("countdown");
+        const today = new Date();
+        const targetDate = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          30,
+          0,
+          0,
+          0
+        );
+
+        function updateCountdown() {
+          const now = new Date();
+          const diff = targetDate - now;
+
+          if (diff <= 0) {
+            countdownEl.innerText = "We're live!";
+            return;
+          }
+
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+          const minutes = Math.floor((diff / 1000 / 60) % 60);
+          const seconds = Math.floor((diff / 1000) % 60);
+
+          countdownEl.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+      });
+    </script>
+  </body>
+</html>
