@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SellZan - The Future of Social Commerce</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- AOS Library for scroll animations -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+    <!-- Animate.css for additional animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --primary: #00ff8c;
+        --secondary: #9900ff;
+        --tertiary: #00c3ff;
+        --dark: #121212;
+        --darker: #080808;
+        --light: #f0f0f0;
+        --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 80px;
+        width: 100%;
+        overflow-x: clip;
+      }
+
+      body {
+        font-family: 'Poppins', sans-serif;
+        background: #000;
+        color: white;
+        line-height: 1.6;
+        overflow-x: clip;
+        position: relative;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Background animated particles effect */
+      .particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* Main container */
+      .container {
+        width: 100%;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 15px;
+        position: relative;
+        z-index: 2;
+        overflow-x: clip;
+      }
+
+      /* Navbar styles */
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 5%;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+        transition: var(--transition);
+      }
+
+      .navbar.scrolled {
+        height: 70px;
+        background: rgba(0, 0, 0, 0.95);
+      }
+
+      .logo {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 2.2rem;
+        font-weight: 700;
+        background: linear-gradient(90deg, var(--primary), var(--tertiary));
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 0 20px rgba(0, 255, 140, 0.3);
+        position: relative;
+        z-index: 2;
+        transition: var(--transition);
+      }
+
+      .logo::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary), transparent);
+        bottom: 0;
+        left: 0;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s ease;
+      }
+
+      .logo:hover::after {
+        transform: scaleX(1);
+      }
+
+      /* Hero section styles */
+      .hero {
+        min-height: 100vh;
+        padding-top: 120px;
+        background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+      }
+
+      .stars {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      .hero-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        z-index: 2;
+        gap: 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      .hero-content {
+        flex: 1;
+        min-width: 280px;
+        padding: 0 1rem;
+        width: 100%;
+      }
+
+      .hero-content h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(90deg, var(--primary), var(--tertiary));
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 0 20px rgba(0, 255, 140, 0.3);
+      }
+
+      .hero-content p {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .hero-content p:last-of-type {
+        color: var(--primary);
+        font-size: 1.2rem;
+        font-style: italic;
+        margin-bottom: 2rem;
+      }
+
+      .hero-illustration {
+        flex: 1;
+        min-width: 280px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+      }
+
+      .hero-image-container {
+        position: relative;
+        width: 400px;
+        height: 400px;
+        max-width: 100%;
+      }
+
+      .hero-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        position: relative;
+        z-index: 2;
+        box-shadow: 
+          0 0 40px rgba(0, 255, 140, 0.5),
+          0 0 80px rgba(0, 195, 255, 0.3);
+        animation: float 6s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%, 100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+
+      .glow-circle {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        top: 0;
+        left: 0;
+        z-index: 1;
+      }
+
+      .glow-circle-1 {
+        background: radial-gradient(circle, rgba(0, 255, 140, 0.3) 0%, transparent 70%);
+        animation: pulse 4s infinite alternate;
+      }
+
+      .glow-circle-2 {
+        background: radial-gradient(circle, rgba(153, 0, 255, 0.2) 0%, transparent 70%);
+        animation: pulse 6s infinite alternate-reverse;
+      }
+
+      .rotating-rings {
+        position: absolute;
+        width: 120%;
+        height: 120%;
+        top: -10%;
+        left: -10%;
+        border-radius: 50%;
+        border: 4px dashed rgba(0, 255, 140, 0.3);
+        animation: rotate 20s linear infinite;
+        pointer-events: none;
+      }
+
+      .ring-2 {
+        width: 140%;
+        height: 140%;
+        top: -20%;
+        left: -20%;
+        border: 2px dashed rgba(0, 195, 255, 0.2);
+        animation-direction: reverse;
+        animation-duration: 30s;
+      }
+
+      @keyframes rotate {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes pulse {
+        0% {
+          opacity: 0.3;
+          transform: scale(0.9);
+        }
+        100% {
+          opacity: 0.7;
+          transform: scale(1.1);
+        }
+      }
+
+      /* Countdown container styles */
+      .countdown-container {
+        margin: 2rem 0;
+        position: relative;
+        width: 100%;
+      }
+
+      .countdown-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: #fff;
+        text-shadow: 0 0 10px rgba(0, 255, 140, 0.5);
+      }
+
+      .countdown {
+        display: flex;
+        justify-content: flex-start;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .countdown-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.6);
+        border: 2px solid var(--primary);
+        border-radius: 10px;
+        padding: 1rem;
+        width: 100px;
+        height: 100px;
+        box-shadow: 0 0 20px rgba(0, 255, 140, 0.3);
+        position: relative;
+        overflow: hidden;
+        transition: var(--transition);
+      }
+
+      .countdown-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(0, 255, 140, 0.1), rgba(0, 195, 255, 0.1));
+        z-index: -1;
+        transform: translateY(100%);
+        transition: transform 0.5s ease;
+      }
+
+      .countdown-item:hover::before {
+        transform: translateY(0);
+      }
+
+      .countdown-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--primary);
+        line-height: 1;
+        text-shadow: 0 0 10px rgba(0, 255, 140, 0.5);
+      }
+
+      .countdown-label {
+        font-size: 0.8rem;
+        color: #fff;
+        text-transform: uppercase;
+        margin-top: 0.5rem;
+      }
+
+      /* Button styles */
+      .btn {
+        display: inline-block;
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-radius: 50px;
+        border: none;
+        cursor: pointer;
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, var(--primary), var(--tertiary));
+        z-index: -1;
+        transition: var(--transition);
+      }
+
+      .btn::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, var(--tertiary), var(--secondary));
+        z-index: -2;
+        opacity: 0;
+        transition: var(--transition);
+      }
+
+      .btn:hover {
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 10px 30px rgba(0, 255, 140, 0.4);
+      }
+
+      .btn:hover::before {
+        opacity: 0;
+      }
+
+      .btn:hover::after {
+        opacity: 1;
+      }
+
+      .btn-primary {
+        color: #000;
+        background: var(--primary);
+        box-shadow: 0 5px 15px rgba(0, 255, 140, 0.3);
+      }
+
+      /* Features section */
+      .features {
+        padding: 4rem 1rem;
+        background: var(--darker);
+        position: relative;
+        overflow: hidden;
+        display: block;
+        width: 100%;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 4rem;
+        font-weight: 700;
+        position: relative;
+        display: inline-block;
+        left: 35%;
+        transform: translateX(-50%);
+        width: auto;
+      }
+
+      .section-title::before {
+        content: '';
+        position: absolute;
+        bottom: -15px;
+        left: 0;
+        width: 80px;
+        height: 4px;
+        background: var(--primary);
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 200px;
+        height: 4px;
+        background: linear-gradient(90deg, transparent, var(--primary), transparent);
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 2rem;
+        width: 100%;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .feature-card {
+        background: rgba(18, 18, 18, 0.8);
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+        height: 100%;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        flex-direction: column;
+        z-index: 1;
+      }
+
+      .feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(0, 255, 140, 0.1), rgba(153, 0, 255, 0.1));
+        z-index: -1;
+        opacity: 0;
+        transition: var(--transition);
+      }
+
+      .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(0, 255, 140, 0.3);
+      }
+
+      .feature-card:hover::before {
+        opacity: 1;
+      }
+
+      .feature-icon {
+        font-size: 3rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+        display: inline-block;
+      }
+
+      .icon-container {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, rgba(0, 255, 140, 0.1), rgba(153, 0, 255, 0.1));
+        margin-bottom: 1.5rem;
+        position: relative;
+      }
+
+      .icon-container::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        border-radius: 50%;
+        z-index: -1;
+        opacity: 0;
+        transition: var(--transition);
+      }
+
+      .feature-card:hover .icon-container::before {
+        opacity: 1;
+      }
+
+      .feature-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--primary);
+        transition: var(--transition);
+      }
+
+      .feature-card:hover h3 {
+        color: #fff;
+        text-shadow: 0 0 10px rgba(0, 255, 140, 0.5);
+      }
+
+      .feature-card p {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 1rem;
+        line-height: 1.7;
+        flex-grow: 1;
+      }
+
+      /* About section */
+      .about {
+        padding: 4rem 1rem;
+        background: linear-gradient(135deg, var(--dark), #000);
+        position: relative;
+        width: 100%;
+      }
+
+      .about-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 3rem;
+        max-width: 1400px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      .about-content {
+        flex: 1;
+        min-width: 300px;
+        width: 100%;
+      }
+
+      .about-content h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(90deg, var(--primary), var(--tertiary));
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .about-content p {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      .about-content .tagline {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--primary);
+        margin-top: 1.5rem;
+      }
+
+      /* Contact form section */
+      .contact {
+        flex: 1;
+        min-width: 300px;
+        max-width: 500px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      .contact-form {
+        background: rgba(18, 18, 18, 0.8);
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+      }
+
+      .contact-form::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, var(--primary), var(--tertiary));
+      }
+
+      .form-title {
+        font-size: 1.8rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        color: #fff;
+      }
+
+        .form-group {
+    margin-bottom: 1rem;
+    position: relative;
+    width: 100%;
+  }
+      .form-control {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1rem;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        color: #fff;
+        transition: var(--transition);
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 10px rgba(0, 255, 140, 0.3);
+      }
+
+      .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      .form-btn {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1.1rem;
+        background: linear-gradient(45deg, var(--primary), var(--tertiary));
+        color: #000;
+        font-weight: 600;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .form-btn:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 255, 140, 0.3);
+        background: linear-gradient(45deg, var(--tertiary), var(--primary));
+      }
+
+      .success-message {
+        display: none;
+        text-align: center;
+        padding: 1rem;
+        background: rgba(0, 255, 140, 0.1);
+        border-radius: 8px;
+        margin-top: 1rem;
+        color: var(--primary);
+        border: 1px solid var(--primary);
+      }
+
+      /* Footer styles */
+      .footer {
+        background: #0a0a0a;
+        padding: 2rem 0;
+        text-align: center;
+        position: relative;
+        width: 100%;
+      }
+
+      .footer-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      .footer p {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 1rem;
+      }
+
+      .footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--primary), transparent);
+      }
+
+      /* Utility classes */
+      .text-gradient {
+        background: linear-gradient(90deg, var(--primary), var(--tertiary));
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .visible {
+        display: block;
+      }
+
+      /* Improved responsive styles */
+      @media (max-width: 992px) {
+        .hero-content h1 {
+          font-size: 2.8rem;
+        }
+
+        .feature-grid {
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        }
+
+        .hero-image-container {
+          width: 350px;
+          height: 350px;
+          max-width: 100%;
+        }
+
+   
+      }
+
+      @media (max-width: 768px) {
+        .navbar {
+          padding: 0 1rem;
+        }
+        
+        .hero {
+          padding-top: 100px;
+        }
+
+        .hero-wrapper {
+          flex-direction: column;
+          gap: 2rem;
+        }
+
+        .hero-content {
+          text-align: center;
+          padding: 0 1rem;
+        }
+
+        .hero-content h1 {
+          font-size: 2.3rem;
+        }
+
+        .countdown {
+          justify-content: center;
+        }
+
+        .countdown-item {
+          width: 80px;
+          height: 80px;
+          padding: 0.8rem;
+        }
+
+        .countdown-value {
+          font-size: 2rem;
+        }
+
+        .hero-illustration {
+          margin-top: 1rem;
+        }
+
+        .hero-image-container {
+          width: 300px;
+          height: 300px;
+          max-width: 100%;
+        }
+
+        .about-wrapper {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .section-title {
+          font-size: 2rem;
+          width: 100%;
+          text-align: center;
+          left: 0;
+          transform: none;
+        }
+
+        .feature-card {
+          padding: 1.5rem;
+        }
+
+        .contact-form {
+          padding: 1.5rem;
+        }
+        
+        .btn {
+          width: 100%;
+          text-align: center;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .logo {
+          font-size: 1.8rem;
+        }
+        
+        .hero-content h1 {
+          font-size: 1.8rem;
+          word-wrap: break-word;
+        }
+        
+        .hero-content p {
+          font-size: 1rem;
+        }
+        
+        .btn {
+          padding: 0.8rem 1.5rem;
+          font-size: 1rem;
+        }
+        
+        .countdown-item {
+          width: 65px;
+          height: 65px;
+          padding: 0.5rem;
+        }
+        
+        .countdown-value {
+          font-size: 1.5rem;
+        }
+        
+        .countdown-label {
+          font-size: 0.7rem;
+        }
+        
+        .hero-image-container {
+          width: 220px;
+          height: 220px;
+        }
+        
+        .form-control {
+          padding: 0.8rem;
+        }
+        
+        .form-btn {
+          padding: 0.8rem;
+        }
+        
+        .section-title {
+          font-size: 1.8rem;
+          margin-bottom: 2rem;
+        }
+        
+        .feature-grid {
+          grid-template-columns: 1fr;
+        }
+        
+        .feature-card {
+          margin-bottom: 1rem;
+        }
+      }
+      
+      @media (min-width: 990px){
+          .section-title {
+              position: relative;
+              right: 35%;
+          }
+      }
+
+      /* Additional starry background styles */
+      @keyframes twinkle {
+        0% { opacity: 0.2; }
+        100% { opacity: 1; }
+      }
+      
+      /* Countdown animation */
+      .countdown-value {
+        position: relative;
+        display: inline-block;
+      }
+      
+      .animate__flipInX {
+        animation-duration: 0.8s !important;
+      }
+      
+      /* Fix for iOS Safari and other mobile browsers */
+      html, body {
+        -webkit-text-size-adjust: 100%;
+        -webkit-overflow-scrolling: hidden;
+        max-width: 100%;
+      }
+      
+      /* Star styling */
+      .star {
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+      }
+      
+      .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.nav-avatar {
+  display: flex;
+  align-items: center;
+}
+
+.avatar-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #00ff00;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.avatar-img:hover {
+  transform: scale(1.1);
+}
+
+
+.user-type-selector {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .type-option {
+    flex: 1;
+    position: relative;
+  }
+  
+  .type-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .type-option label {
+    display: block;
+    text-align: center;
+    padding: 0.75rem 0.5rem;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  
+  .type-option input[type="radio"]:checked + label {
+    border-color: var(--primary);
+    background: rgba(0, 255, 140, 0.1);
+    box-shadow: 0 0 15px rgba(0, 255, 140, 0.3);
+  }
+  
+  .type-option label:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 255, 140, 0.2);
+  }
+
+
+    </style>
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="logo">SellZan</div>
+      <div class="nav-avatar">
+    <img src="https://www.sellzan.com/public/images/logo.png" alt="Avatar" class="avatar-img">
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="stars"></div>
+      <div class="container">
+        <div class="hero-wrapper">
+          <div class="hero-content" data-aos="fade-right" data-aos-duration="1000">
+            <h1 class="animate__animated animate__fadeInUp">Welcome to SellZan! The Social Commerce Revolution</h1>
+            <p class="animate__animated animate__fadeInUp animate__delay-1s">This isn't just another marketplace; it's built on trust.</p>
+            <p class="animate__animated animate__fadeInUp animate__delay-1s">At SellZan, our goal is simple: to solve the problem of untrusted and unstructured peer-to-peer marketing, allowing you to buy, sell, and connect safely.</p>
+            <p class="animate__animated animate__fadeInUp animate__delay-2s">This is a platform for secure transactions and meaningful interactions.</p>
+            <p class="animate__animated animate__fadeInUp animate__delay-2s">The next and biggest thing is here.</p>
+            <p class="animate__animated animate__fadeInUp animate__delay-3s"><em>Join the waitlist — Be part of over 10,000 people who already love it.</em></p>
+            
+            <div class="countdown-container animate__animated animate__fadeInUp animate__delay-3s">
+              <h3 class="countdown-title">Launching in:</h3>
+              <div class="countdown" id="countdown">
+                <div class="countdown-item">
+                  <div class="countdown-value" id="days">00</div>
+                  <div class="countdown-label">Days</div>
+                </div>
+                <div class="countdown-item">
+                  <div class="countdown-value" id="hours">00</div>
+                  <div class="countdown-label">Hours</div>
+                </div>
+                <div class="countdown-item">
+                  <div class="countdown-value" id="minutes">00</div>
+                  <div class="countdown-label">Minutes</div>
+                </div>
+                <div class="countdown-item">
+                  <div class="countdown-value" id="seconds">00</div>
+                  <div class="countdown-label">Seconds</div>
+                </div>
+              </div>
+            </div>
+            
+            <a href="#waitlist" class="btn btn-primary animate__animated animate__fadeInUp animate__delay-4s">Join the Waitlist Now</a>
+          </div>
+          
+          <div class="hero-illustration" data-aos="fade-left" data-aos-duration="1000">
+            <div class="hero-image-container">
+              <img src="https://www.sellzan.com/public/images/preview.png" alt="SellZan App Preview" class="hero-image" />
+              <div class="glow-circle glow-circle-1"></div>
+              <div class="glow-circle glow-circle-2"></div>
+              <div class="rotating-rings"></div>
+              <div class="rotating-rings ring-2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+      <div class="container">
+        <h2 class="section-title" data-aos="fade-up">What We Offer</h2>
+        <div class="feature-grid">
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="icon-container">
+              <i class="fa-solid fa-video feature-icon"></i>
+            </div>
+            <h3>Live Marketing</h3>
+            <p>Connect with your audience in real-time through live streams and instant promotions that drive engagement and sales.</p>
+          </div>
+          
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="icon-container">
+              <i class="fa-solid fa-chart-line feature-icon"></i>
+            </div>
+            <h3>Smart Analytics</h3>
+            <p>Make data-driven decisions with AI-powered insights that analyze customer behavior and optimize your selling strategy.</p>
+          </div>
+          
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="icon-container">
+              <i class="fa-solid fa-share-nodes feature-icon"></i>
+            </div>
+            <h3>Social Commerce</h3>
+            <p>Turn followers into customers with seamless social media integration that makes every post shoppable.</p>
+          </div>
+          
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+            <div class="icon-container">
+              <i class="fa-solid fa-robot feature-icon"></i>
+            </div>
+            <h3>Automated Tools</h3>
+            <p>Save time with smart tools that handle inventory management, price optimization, and customer communications.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section with Contact Form -->
+    <section class="about" id="waitlist">
+      <div class="container">
+        <div class="about-wrapper">
+          <div class="about-content" data-aos="fade-right">
+            <h2>SellZan</h2>
+            <p>Discover smarter ways to buy and sell online with powerful tools in your pocket.</p>
+            <p class="tagline"><strong><i>SellZan: Get Busy, Get Social.</i></strong></p>
+          </div>
+          
+          <div class="contact" data-aos="fade-left">
+            <div class="contact-form">
+              <h3 class="form-title">Join the Waitlist</h3>
+              <form id="waitlist-form" method="POST" action="/waitlist">
+              
+                <div class="form-group">
+                  <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                  <input type="tel" class="form-control" id="phone" name="phone" placeholder="Your Phone Number" required>
+                </div>
+                <!-- buyer  or seller option -->
+                 <div class="form-group">
+              <label for="user-type" class="form-label">I am a:</label>
+              <div class="user-type-selector">
+                <div class="type-option">
+                  <input type="radio" id="buyer" name="user_type" value="buyer" required checked>
+                  <label for="buyer">Buyer</label>
+                </div>
+                <div class="type-option">
+                  <input type="radio" id="seller" name="user_type" value="seller">
+                  <label for="seller">Seller</label>
+                </div>
+              </div>
+            </div>
+
+                <button type="submit" class="form-btn">Join Now</button>
+
+                
+              </form>
+
+              <div id="success-message" class="success-message">Thank you for joining our waitlist! We'll contact you soon.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <p>&copy; 2025 SellZan. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+      // Initialize AOS library
+      AOS.init({
+        duration: 1000,
+        once: true,
+        mirror: false
+      });
+
+      // Navbar scroll effect
+      window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+      });
+
+      // Enhanced Countdown Timer
+      document.addEventListener('DOMContentLoaded', function() {
+        const countdownElement = document.getElementById('countdown');
+        const daysElement = document.getElementById('days');
+        const hoursElement = document.getElementById('hours');
+        const minutesElement = document.getElementById('minutes');
+        const secondsElement = document.getElementById('seconds');
+        
+        // Set the launch date (end of current month)
+        const today = new Date();
+        const targetDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+        
+        function updateCountdown() {
+          const now = new Date();
+          const diff = targetDate - now;
+          
+          if (diff <= 0) {
+            countdownElement.innerHTML = '<div class="countdown-complete">We\'re Live!</div>';
+            return;
+          }
+          
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+          
+          // Update with animation
+          updateCountdownValue(daysElement, days);
+          updateCountdownValue(hoursElement, hours);
+          updateCountdownValue(minutesElement, minutes);
+          updateCountdownValue(secondsElement, seconds);
+        }
+        
+        function updateCountdownValue(element, value) {
+          const formattedValue = value < 10 ? `0${value}` : value;
+          if (element.textContent !== formattedValue) {
+            element.classList.add('animate__animated', 'animate__flipInX');
+            element.textContent = formattedValue;
+            
+            // Remove animation class after animation completes
+            setTimeout(() => {
+              element.classList.remove('animate__animated', 'animate__flipInX');
+            }, 1000);
+          }
+        }
+        
+        // Initial call
+        updateCountdown();
+        
+        // Update countdown every second
+        setInterval(updateCountdown, 1000);
+      });
+
+      // Starry background effect
+      document.addEventListener('DOMContentLoaded', function() {
+        const starsContainer = document.querySelector('.stars');
+        
+        // Create stars
+        for (let i = 0; i < 150; i++) {
+          const star = document.createElement('div');
+          star.classList.add('star');
+          star.style.width = `${Math.random() * 3}px`;
+          star.style.height = star.style.width;
+          star.style.left = `${Math.random() * 100}%`;
+          star.style.top = `${Math.random() * 100}%`;
+          star.style.animationDuration = `${Math.random() * 3 + 1}s`;
+          star.style.animationDelay = `${Math.random() * 3}s`;
+          
+          // Apply styles
+          star.style.position = 'absolute';
+          star.style.background = 'white';
+          star.style.borderRadius = '50%';
+          star.style.opacity = Math.random();
+          star.style.animation = `twinkle ${Math.random() * 5 + 3}s infinite alternate`;
+          
+          starsContainer.appendChild(star);
+        }
+      });
+    </script>
+    <script>
+document.getElementById('waitlist-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const form = this; // ✅ capture the form before the arrow function
+
+  const formData = new FormData(form); // not `this` inside fetch
+
+  fetch('/waitlist', {
+    method: 'POST',
+    headers: {
+      'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+      'Accept': 'application/json'
+    },
+    body: formData
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.message === 'success') {
+      document.getElementById('success-message').style.display = 'block';
+      form.reset();
+    } else if (data.message === 'validation_failed') {
+      const firstError = Object.values(data.errors)[0][0];
+      alert('❌ ' + firstError);
+    } else {
+      alert('Something went wrong.');
+    }
+  })
+  .catch(error => {
+    console.error(error);
+    alert('Network error.');
+  });
+});
+</script>
+
+
+
+    <style>
+      /* Additional styles for the starry background */
+      @keyframes twinkle {
+        0% { opacity: 0.2; }
+        100% { opacity: 1; }
+      }
+      
+      /* Countdown animation */
+      .countdown-value {
+        position: relative;
+        display: inline-block;
+      }
+      
+      .animate__flipInX {
+        animation-duration: 0.8s !important;
+      }
+      
+      /* Make sure countdown items are properly centered on mobile */
+      @media (max-width: 480px) {
+        .countdown {
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+      }
+    </style>
+  </body>
+</html>
